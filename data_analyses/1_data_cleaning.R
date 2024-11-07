@@ -5,7 +5,7 @@ raw_data <- readxl::read_excel("raw_data/Food sample complete data.xlsx")
 sheet_names <- readxl::excel_sheets("raw_data/Food sample complete data.xlsx")
 # File contains 1 sheet only
 
-view(raw_data)
+# view(raw_data)
 names(raw_data)
 
 # 1. Conduct data cleaning #####################################################
@@ -29,8 +29,12 @@ cleaned_data <- raw_data %>%
     TRUE ~ Species  # Keep other species unchanged
   ),
   species_part = paste(species_dc_ver, Edible_part_analysed, sep = "_"),
-  species_location = paste(species_dc_ver, Location, sep = "_")
-  )
+  species_location = paste(species_dc_ver, Location, sep = "_"),
+  species_part_location = paste(species_dc_ver, Edible_part_analysed, Location, sep = "_"),
+  domesticated_or_wild = case_when(
+    Code == "Domesticated" ~ "Domesticated",
+    T ~ "Wild"
+  ))
 unique(cleaned_data$species_dc_ver)
 
 # Generate notes for each quantitative measurement data
