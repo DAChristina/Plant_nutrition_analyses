@@ -1,8 +1,8 @@
 library(tidyverse)
 library(readxl)
 
-raw_data <- readxl::read_excel("raw_data/Food sample complete data.xlsx")
-sheet_names <- readxl::excel_sheets("raw_data/Food sample complete data.xlsx")
+raw_data <- readxl::read_excel("raw_data/Food sample complete data ver 2.xlsx")
+sheet_names <- readxl::excel_sheets("raw_data/Food sample complete data ver 2.xlsx")
 # File contains 1 sheet only
 
 # view(raw_data)
@@ -34,13 +34,15 @@ cleaned_data <- raw_data %>%
   domesticated_or_wild = case_when(
     Code == "Domesticated" ~ "Domesticated",
     T ~ "Wild"
-  ))
+  ),
+  part_domesticated_or_wild = paste(Edible_part_analysed, domesticated_or_wild, sep = "_")
+  )
 unique(cleaned_data$species_dc_ver)
 
 # Generate notes for each quantitative measurement data
 names(cleaned_data) # check the position of quantitative calculations (column 10 to 79)
 
-for (i in 10:79) {
+for (i in 11:80) {
   col_name <- names(cleaned_data)[i]
   notes_col_name <- paste0("notes_", col_name)
   
