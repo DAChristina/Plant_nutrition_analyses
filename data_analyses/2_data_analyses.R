@@ -27,11 +27,40 @@ dat_sel <- data %>%
   # Fresh Weight (FW) omitted from Kruskal-Wallis Test
   dplyr::select(-contains("_FW"))
 
-
-
 # Check column positions again:
 names(dat_sel)
 value_columns <- colnames(dat_sel)[11:26]
+
+# Shapiro-Wilk test for normality ##############################################
+# R's annoying dimension described as df!
+shapiro_results <- data.frame(
+  value_column = character(),
+  statistic = numeric(),
+  p_value = numeric(),
+  stringsAsFactors = F)
+
+for (value_col in value_columns) {
+  shapiro_test_result <- shapiro.test(dat_sel[[value_col]])
+  
+  shapiro_results <- rbind(shapiro_results,
+                           data.frame(
+                             value_column = value_col,
+                             statistic_shapiro = shapiro_test_result$statistic,
+                             p_value_shapiro = shapiro_test_result$p.value
+                           ))
+}
+
+# Rewrite results in new df!
+shapiro_normality_test <- shapiro_results %>% 
+  dplyr::mutate(significance_shapiro_normality = case_when(
+    p_value_shapiro < 0.05 ~ "significant",
+    p_value_shapiro >= 0.05 ~ "not statistically significant"
+  ))
+
+write.csv(shapiro_normality_test, "outputs/shapiro_normality_test.csv", row.names = F)
+
+
+################################################################################
 
 # Filtered data preparation
 filter_fruit <- dat_sel %>% 
@@ -227,6 +256,155 @@ all_results_parts <- kruskal_fruit %>%
 write.csv(all_results_parts, "outputs/kruskal_results_per_parts_group_categories.csv", row.names = F)
 
 
+# 2.2. Parts vs. all quantitative data, grouped by domesticated or wild ########
+# 2.2.1. Fruit
+# R's annoying dimension described as df!
+wilcox_results <- data.frame(
+  value_column = character(),
+  statistic = numeric(),
+  p_value = numeric(),
+  stringsAsFactors = F)
+
+# value_columns unique to filter_fruit
+names(filter_fruit)
+value_columns <- colnames(filter_fruit)[11:24]
+
+for (value_col in value_columns) {
+  wilcox_test_result_fruit <- wilcox.test(filter_fruit[[value_col]] ~ filter_fruit$domesticated_or_wild)
+  
+  wilcox_results <- rbind(wilcox_results,
+                          data.frame(
+                            value_column = value_col,
+                            statistic_fruit = wilcox_test_result_fruit$statistic,
+                            p_value_fruit = wilcox_test_result_fruit$p.value
+                          ))
+}
+
+# Rewrite results in new df!
+wilcox_fruit <- wilcox_results %>% 
+  dplyr::mutate(significance_fruit = case_when(
+    p_value_fruit < 0.05 ~ "significant",
+    p_value_fruit >= 0.05 ~ "not statistically significant"
+  )) %>% 
+  glimpse()
+
+# 2.2.2. Leaf
+# R's annoying dimension described as df!
+wilcox_results <- data.frame(
+  value_column = character(),
+  statistic = numeric(),
+  p_value = numeric(),
+  stringsAsFactors = F)
+
+# reapply filter leaf when grouped by domesticated or wild:
+filter_leaf_2 <- filter_leaf %>% 
+  dplyr::select(-AVERAGE_Vit_B1_DW_mg_per_kg)
+
+# value_columns unique to filter_fruit
+names(filter_leaf_2)
+value_columns <- colnames(filter_leaf_2)[11:21]
+
+for (value_col in value_columns) {
+  wilcox_test_result_leaf <- wilcox.test(filter_leaf_2[[value_col]] ~ filter_leaf_2$domesticated_or_wild)
+  
+  wilcox_results <- rbind(wilcox_results,
+                          data.frame(
+                            value_column = value_col,
+                            statistic_leaf = wilcox_test_result_leaf$statistic,
+                            p_value_leaf = wilcox_test_result_leaf$p.value
+                          ))
+}
+
+# Rewrite results in new df!
+wilcox_leaf <- wilcox_results %>% 
+  dplyr::mutate(significance_leaf = case_when(
+    p_value_leaf < 0.05 ~ "significant",
+    p_value_leaf >= 0.05 ~ "not statistically significant"
+  )) %>% 
+  glimpse()
+
+# 2.2.3. Seed
+# R's annoying dimension described as df!
+wilcox_results <- data.frame(
+  value_column = character(),
+  statistic = numeric(),
+  p_value = numeric(),
+  stringsAsFactors = F)
+
+# reapply filter seed when grouped by domesticated or wild:
+filter_seed_2 <- filter_seed %>% 
+  dplyr::select(-AVERAGE_Carotenoid_total_DW_mg_per_kg)
+
+# value_columns unique to filter_fruit
+names(filter_seed_2)
+value_columns <- colnames(filter_seed_2)[11:25]
+
+for (value_col in value_columns) {
+  wilcox_test_result_seed <- wilcox.test(filter_seed_2[[value_col]] ~ filter_seed_2$domesticated_or_wild)
+  
+  wilcox_results <- rbind(wilcox_results,
+                          data.frame(
+                            value_column = value_col,
+                            statistic_seed = wilcox_test_result_seed$statistic,
+                            p_value_seed = wilcox_test_result_seed$p.value
+                          ))
+}
+
+# Rewrite results in new df!
+wilcox_seed <- wilcox_results %>% 
+  dplyr::mutate(significance_seed = case_when(
+    p_value_seed < 0.05 ~ "significant",
+    p_value_seed >= 0.05 ~ "not statistically significant"
+  )) %>% 
+  glimpse()
+
+# 2.2.4. Tuber
+# R's annoying dimension described as df!
+wilcox_results <- data.frame(
+  value_column = character(),
+  statistic = numeric(),
+  p_value = numeric(),
+  stringsAsFactors = F)
+
+# reapply filter tuber when grouped by domesticated or wild:
+filter_tuber_2 <- filter_tuber %>% 
+  dplyr::select(-AVERAGE_Vit_B1_DW_mg_per_kg,
+                -AVERAGE_Vit_C_DW_mg_per_kg)
+
+# value_columns unique to filter_fruit
+names(filter_tuber_2)
+value_columns <- colnames(filter_tuber_2)[11:23]
+
+for (value_col in value_columns) {
+  wilcox_test_result_tuber <- wilcox.test(filter_tuber_2[[value_col]] ~ filter_tuber_2$domesticated_or_wild, exact = F)
+  
+  wilcox_results <- rbind(wilcox_results,
+                          data.frame(
+                            value_column = value_col,
+                            statistic_tuber = wilcox_test_result_tuber$statistic,
+                            p_value_tuber = wilcox_test_result_tuber$p.value
+                          ))
+}
+
+# Rewrite results in new df!
+wilcox_tuber <- wilcox_results %>% 
+  dplyr::mutate(significance_tuber = case_when(
+    p_value_tuber < 0.05 ~ "significant",
+    p_value_tuber >= 0.05 ~ "not statistically significant"
+  )) %>% 
+  glimpse()
+
+
+
+# Bind all results into one huge df
+all_results_parts_domesticated <- wilcox_fruit %>% 
+  dplyr::full_join(wilcox_leaf, by = "value_column") %>% 
+  dplyr::full_join(wilcox_seed, by = "value_column") %>% 
+  dplyr::full_join(wilcox_tuber, by = "value_column")
+
+write.csv(all_results_parts_domesticated, "outputs/wilcox_results_per_parts_domesticated_group_categories.csv", row.names = F)
+
+
 # Trial Dunn's Test with Bonferroni's correction ###############################
 filtered_data <- dat_sel %>% 
   dplyr::filter(Edible_part_simplified == "Tuber",
@@ -235,7 +413,7 @@ filtered_data <- dat_sel %>%
 dunn_test_result <- FSA::dunnTest(filtered_data$AVERAGE_Carbohydrate_DW_g_per_100_g, filtered_data$species_part_location, method = "none")
 dunn_df <- as.data.frame(dunn_test_result$res)
 
-# 2.2. Location vs. all quantitative data ######################################
+# 2.2. Simplified Part vs. all quantitative data ###############################
 # Check column positions again:
 names(dat_sel)
 value_columns <- colnames(dat_sel)[11:26]
@@ -251,21 +429,21 @@ kruskal_results <- data.frame(
 
 
 for (value_col in value_columns) {
-  kruskal_test_result <- kruskal.test(dat_sel[[value_col]] ~ dat_sel$Location)
+  kruskal_test_result <- kruskal.test(dat_sel[[value_col]] ~ dat_sel$Edible_part_simplified)
   
   kruskal_results <- rbind(kruskal_results,
                            data.frame(
                              value_column = value_col,
-                             statistic_location = kruskal_test_result$statistic,
-                             p_value_location = kruskal_test_result$p.value
+                             statistic_part = kruskal_test_result$statistic,
+                             p_value_part = kruskal_test_result$p.value
                            ))
 }
 
 # Rewrite results in new df!
-kruskal_location <- kruskal_results %>% 
-  dplyr::mutate(significance_location = case_when(
-    p_value_location < 0.05 ~ "significant",
-    p_value_location >= 0.05 ~ "not statistically significant"
+kruskal_part <- kruskal_results %>% 
+  dplyr::mutate(significance_part = case_when(
+    p_value_part < 0.05 ~ "significant",
+    p_value_part >= 0.05 ~ "not statistically significant"
   ))
 
 

@@ -1,0 +1,17 @@
+"value_column","statistic_fruit","p_value_fruit","significance_fruit","statistic_leaf","p_value_leaf","significance_leaf","statistic_seed","p_value_seed","significance_seed","statistic_tuber","p_value_tuber","significance_tuber"
+"AVERAGE_Carbohydrate_DW_g_per_100_g",3,0.8,"not statistically significant",4,0.333333333333333,"not statistically significant",35,0.104029304029304,"not statistically significant",23,0.145368290225416,"not statistically significant"
+"AVERAGE_Protein_DW_percent",2,1,"not statistically significant",31,0.0625,"not statistically significant",44,0.00146520146520147,"significant",0,0.110765229564623,"not statistically significant"
+"AVERAGE_Fat_DW_percent",0,0.333333333333333,"not statistically significant",2,0.1875,"not statistically significant",16,0.825174825174825,"not statistically significant",10,0.885134852934916,"not statistically significant"
+"AVERAGE_Ash_DW_percent",0,0.333333333333333,"not statistically significant",28,0.25,"not statistically significant",18,0.660805860805861,"not statistically significant",0,0.110765229564623,"not statistically significant"
+"AVERAGE_Carotenoid_total_DW_mg_per_kg",0,1,"not statistically significant",4,1,"not statistically significant",NA,NA,NA,NA,NA,NA
+"AVERAGE_Vit_C_DW_mg_per_kg",0,0.666666666666667,"not statistically significant",6,1,"not statistically significant",9,0.4,"not statistically significant",NA,NA,NA
+"AVERAGE_P_DW_mg_per_100_g",2,1,"not statistically significant",9,0.714285714285714,"not statistically significant",9,0.412121212121212,"not statistically significant",12,0.939914093226748,"not statistically significant"
+"AVERAGE_Mg_DW_mg_per_100_g",0,0.5,"not statistically significant",5,1,"not statistically significant",7,0.352380952380952,"not statistically significant",4,0.311901017438946,"not statistically significant"
+"AVERAGE_Ca_DW_mg_per_100_g",1,0.666666666666667,"not statistically significant",31,0.0625,"not statistically significant",23,0.949450549450549,"not statistically significant",10,0.835219149785029,"not statistically significant"
+"AVERAGE_Zn_DW_mg_per_100_g",0,0.333333333333333,"not statistically significant",16,1,"not statistically significant",4,0.0175824175824176,"significant",0,0.110765229564623,"not statistically significant"
+"AVERAGE_Fe_DW_mg_per_100_g",0,0.333333333333333,"not statistically significant",19,0.8125,"not statistically significant",15,0.411721611721612,"not statistically significant",5,0.367382155720896,"not statistically significant"
+"AVERAGE_HCN_DWppm",0,1,"not statistically significant",NA,NA,NA,8,0.214141414141414,"not statistically significant",7,0.532602812936474,"not statistically significant"
+"AVERAGE_Oxalate_DW_percent_wb",0,1,"not statistically significant",NA,NA,NA,4,0.0484848484848485,"significant",0,0.110765229564623,"not statistically significant"
+"AVERAGE_Tanin_DW_mg_as._Tanic_per_g",0,1,"not statistically significant",NA,NA,NA,5,0.0727272727272727,"not statistically significant",2.5,0.211915530857299,"not statistically significant"
+"AVERAGE_Vit_B1_DW_mg_per_kg",NA,NA,NA,NA,NA,NA,0,0.4,"not statistically significant",NA,NA,NA
+"AVERAGE_Phytate_DW_mg_per_g",NA,NA,NA,NA,NA,NA,24,0.214141414141414,"not statistically significant",20,0.29831069355672,"not statistically significant"
